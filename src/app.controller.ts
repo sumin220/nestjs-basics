@@ -78,7 +78,7 @@ export class AppController {
       throw new NotFoundException('존재하지 않는 ID의 영화입니다.');
     }
 
-    const movies = this.movies.splice(movieIndex, 1);
+    const movies = this.movies.splice(movieIndex, 1)[0];
     return movies;
   }
 }
