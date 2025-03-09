@@ -39,7 +39,7 @@ export class AppController {
       return this.movies;
     }
 
-    return this.movies.filter((m) => m.title === title);
+    return this.movies.filter((m) => m.title.startsWith(title));
   }
 
   @Get(':id')
