@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller('movie')
@@ -19,5 +19,15 @@ export class AppController {
   @Post()
   postMovie(@Body('title') title: string) {
     return this.appService.createMovie(title);
+  }
+
+  @Patch(':id')
+  patchMovie(@Param('id') id: string, @Body('title') title: string) {
+    return this.appService.updateMovie(+id, title);
+  }
+
+  @Delete(':id')
+  deleteMovie(@Param('id') id: string) {
+    return this.appService.deleteMovie(+id);
   }
 }
