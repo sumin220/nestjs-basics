@@ -36,4 +36,15 @@ export class AppService {
 
     return movie;
   }
+
+  private idCounter = 3;
+
+  createMovie(title: string) {
+    const movie: Movie = {
+      id: this.idCounter++,
+      title: title,
+    };
+    this.movies.push(movie);
+    return movie;
+  }
 }
