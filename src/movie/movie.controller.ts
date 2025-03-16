@@ -1,34 +1,42 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { MovieService } from './movie.service';
-import { CreateMovieDto } from './dto/create-movie.dto';
-import { UpdateMovieDto } from './dto/update-movie.dto';
 
 @Controller('movie')
 export class MovieController {
   constructor(private readonly movieService: MovieService) {}
 
-  @Post()
-  create(@Body() createMovieDto: CreateMovieDto) {
-    return this.movieService.create(createMovieDto);
-  }
-
   @Get()
-  findAll() {
-    return this.movieService.findAll();
+  getMovides(@Query('title') title?: string) {
+    // title 쿼리의 타입이 string인지?
+    return this.movieService.getManyMovies(title);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.movieService.findOne(+id);
+  getMovie(@Param('id') id: string) {
+    return this.movieService.getMovieById(+id);
+  }
+
+  @Post()
+  postMovie(@Body('title') title: string) {
+    return this.movieService.createMovie(title);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMovieDto: UpdateMovieDto) {
-    return this.movieService.update(+id, updateMovieDto);
+  patchMovie(@Param('id') id: string, @Body('title') title: string) {
+    return this.movieService.updateMovie(+id, title);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.movieService.remove(+id);
+  deleteMovie(@Param('id') id: string) {
+    return this.movieService.deleteMovie(+id);
   }
 }
