@@ -1,12 +1,12 @@
 import {
   Equals, IsArray,
   IsBoolean, IsDateString,
-  IsDefined,
+  IsDefined, IsDivisibleBy,
   IsEmpty, IsEnum,
-  IsIn, IsInt,
+  IsIn, IsInt, IsNegative,
   IsNotEmpty,
   IsNotIn, IsNumber,
-  IsOptional, IsString,
+  IsOptional, IsPositive, IsString, Max, Min,
   NotEquals,
 } from 'class-validator';
 
@@ -38,6 +38,12 @@ export class UpdateMovieDto {
   // @IsInt()
   // @IsArray()
   // @IsEnum(MovieGenre)
-  @IsDateString()
+  // @IsDateString()
+  // @IsDivisibleBy(5)
+  // @IsPositive() //양수인가?
+  // @IsNegative()
+  // @Min(100)
+  // @Max(1000)
+
   test: string;
 }
