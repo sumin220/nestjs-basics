@@ -1,12 +1,13 @@
 import {
-  Equals, IsArray,
-  IsBoolean, IsDateString,
+  Contains,
+  Equals, IsAlphanumeric, IsArray,
+  IsBoolean, IsCreditCard, IsDateString,
   IsDefined, IsDivisibleBy,
-  IsEmpty, IsEnum,
-  IsIn, IsInt, IsNegative,
+  IsEmpty, IsEnum, IsHexColor,
+  IsIn, IsInt, IsLatLong, IsNegative,
   IsNotEmpty,
   IsNotIn, IsNumber,
-  IsOptional, IsPositive, IsString, Max, Min,
+  IsOptional, IsPositive, IsString, IsUUID, Max, MaxLength, Min, MinLength, NotContains,
   NotEquals,
 } from 'class-validator';
 
@@ -44,6 +45,14 @@ export class UpdateMovieDto {
   // @IsNegative()
   // @Min(100)
   // @Max(1000)
-
+  // @Contains('sumin')
+  // @NotContains('s umin')
+  // @IsAlphanumeric()
+  // @IsCreditCard()
+  // @IsHexColor()
+  // @MaxLength(5)
+  // @MinLength(2)
+  // @IsUUID()
+  @IsLatLong() //위도 경도
   test: string;
 }
