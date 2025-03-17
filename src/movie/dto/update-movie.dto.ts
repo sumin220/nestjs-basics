@@ -1,4 +1,19 @@
-import { Equals, IsDefined, IsEmpty, IsIn, IsNotEmpty, IsNotIn, IsOptional, NotEquals } from 'class-validator';
+import {
+  Equals, IsArray,
+  IsBoolean, IsDateString,
+  IsDefined,
+  IsEmpty, IsEnum,
+  IsIn, IsInt,
+  IsNotEmpty,
+  IsNotIn, IsNumber,
+  IsOptional, IsString,
+  NotEquals,
+} from 'class-validator';
+
+enum MovieGenre {
+  Fantasy = 'fantasy',
+  Action = 'action',
+}
 
 export class UpdateMovieDto {
   @IsNotEmpty()
@@ -17,5 +32,12 @@ export class UpdateMovieDto {
   // @IsNotEmpty()
   // @IsIn(['action', 'fantasy']) // Array 테스
   // @IsNotIn(['action', 'fantasy'])
+  // @IsBoolean() //Is = 질문같은 거임 boolean이야?
+  // @IsString()
+  // @IsNumber()
+  // @IsInt()
+  // @IsArray()
+  // @IsEnum(MovieGenre)
+  @IsDateString()
   test: string;
 }
