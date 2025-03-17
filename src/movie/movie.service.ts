@@ -19,8 +19,8 @@ export class MovieService {
     movie2.title = '반지의 제왕';
     movie1.id = 1;
     movie2.id = 2;
-    movie1.genre = '판타지';
-    movie2.genre = '판타지';
+    movie1.genre = 'fantasy';
+    movie2.genre = 'action';
 
     this.movies.push(movie1, movie2);
   }
