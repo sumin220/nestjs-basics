@@ -4,7 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { Movie } from './movie/entity/movie.entity';
-import { BaseTable } from './movie/entity/base-Table.entity';
+import { BaseTable } from './movie/entity/base-table.entity';
+import { MovieDetail } from './movie/entity/movie-detail.entity';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { BaseTable } from './movie/entity/base-Table.entity';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
-        entities: [Movie],
+        entities: [Movie, MovieDetail,],
         synchronize: true, // 개발할 때만 true
       }),
       inject: [ConfigService],
