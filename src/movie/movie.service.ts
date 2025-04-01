@@ -4,6 +4,7 @@ import { UpdateMovieDto } from './dto/update-movie.dto';
 import { Movie } from './entity/movie.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { MovieDetail } from './entity/movie-detail.entity';
 
 
 
@@ -16,6 +17,8 @@ export class MovieService {
   constructor(
     @InjectRepository(Movie)
     private readonly movieRepository: Repository<Movie>,
+    @InjectRepository(MovieDetail)
+    private readonly movieDetailRepository: Repository<MovieDetail>,
   ) {}
 
   getManyMovies(title?: string) {
@@ -27,6 +30,7 @@ export class MovieService {
 
     const movie = await this.movieRepository.findOne({
       where: { id },
+      relations: ['detail'],
     });
     if (!movie) {
       throw new NotFoundException('존재하지 않는 ID의 영화입니다.');
@@ -37,7 +41,15 @@ export class MovieService {
 
   async createMovie(createMovieDto: CreateMovieDto) {
 
-    const movie = await this.movieRepository.save(createMovieDto);
+    const movieDetail = await this.movieDetailRepository.save({
+      detail: createMovieDto.detail
+    })
+
+    const movie = await this.movieRepository.save({
+      title: createMovieDto.title,
+      genre: createMovieDto.genre,
+      detail: movieDetail
+    });
 
     return movie;
   }
@@ -48,14 +60,26 @@ export class MovieService {
       where: { id },
     });
 
-    // const movie = this.movies.find((m) => m.id === +id);
     if (!movie) {
       throw new NotFoundException('존재하지 않는 ID의 영화입니다.');
     }
-    await this.movieRepository.update({ id }, updateMovieDto);
+
+    const {detail, ...movieRest} = updateMovieDto;
+
+    await this.movieRepository.update({ id }, movieRest);
+
+    if (detail) {
+      await this.movieDetailRepository.update({
+        id: movie.detail.id,
+      },
+        {
+          detail
+        })
+    }
 
     const newMovie = await this.movieRepository.findOne({
       where: { id },
+      relations: ['detail'],
     });
     return newMovie;
   }

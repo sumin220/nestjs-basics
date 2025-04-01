@@ -1,13 +1,13 @@
-import { Column, Entity } from 'typeorm';
+import { Column, CreateDateColumn, Entity, VersionColumn } from 'typeorm';
 
 @Entity()
 export class BaseTable {
-  @Column()
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @CreateDateColumn()
   updatedAt: Date;
 
-  @Column()
+  @VersionColumn()
   version: number;
 }
