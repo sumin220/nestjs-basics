@@ -58,6 +58,7 @@ export class MovieService {
 
     const movie = await this.movieRepository.findOne({
       where: { id },
+      relations: ['detail'],
     });
 
     if (!movie) {
@@ -69,12 +70,14 @@ export class MovieService {
     await this.movieRepository.update({ id }, movieRest);
 
     if (detail) {
-      await this.movieDetailRepository.update({
-        id: movie.detail.id,
-      },
+      await this.movieDetailRepository.update(
         {
-          detail
-        })
+          id: movie.detail.id,
+        },
+        {
+          detail,
+        },
+      );
     }
 
     const newMovie = await this.movieRepository.findOne({
