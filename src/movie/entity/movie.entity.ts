@@ -15,6 +15,10 @@ export class Movie extends BaseTable{
 
   @OneToOne(
     () => MovieDetail,
+    movieDetail => movieDetail.id,
+    {
+      cascade: true,
+    }
   )
   @JoinColumn()
   detail: MovieDetail;
